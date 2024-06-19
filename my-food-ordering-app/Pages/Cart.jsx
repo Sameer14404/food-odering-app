@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_IMG } from "../utils/image";
-import { removeItem } from "../Redux-store/cartSlice";
+import { clearCart, removeItem } from "../Redux-store/cartSlice";
 
 const Cart = () => {
   const cart = useSelector((store) => store.cart.items);
@@ -8,6 +8,10 @@ const Cart = () => {
   const handleRemoveItem = (id) => {
     dispatch(removeItem(id));
   };
+
+  const handleClearCart=()=>{
+    dispatch(clearCart())
+  }
 
   let total = 0;
 
@@ -81,7 +85,7 @@ const Cart = () => {
             {/* <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
               Checkout
             </button> */}
-            <button className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+            <button className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600" onClick={()=>handleClearCart()}>
               Clear Cart
             </button>
           </div>
