@@ -9,13 +9,34 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
 
+  // const getData = async () => {
+  //   let ans = await fetch(MAIN_API);
+  //   let data = await ans.json();
+  //   setData(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle.restaurants);
+  //   setFilterData(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle.restaurants);
+  // };
   const getData = async () => {
-    let ans = await fetch(MAIN_API);
-    let data = await ans.json();
-    setData(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle.restaurants);
-    setFilterData(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle.restaurants);
+    try {
+      let response = await fetch(MAIN_API);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      let data = await response.json();
+      const restaurants = data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+  
+      if (restaurants) {
+        setData(restaurants);
+        setFilterData(restaurants);
+      } else {
+        console.error('Failed to retrieve restaurant data.');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
-
+  
+  
   const filterSearch = () => {
     let ans = data.filter((el) =>
       el.info.name.toLowerCase().includes(searchText.toLowerCase())
