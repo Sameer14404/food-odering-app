@@ -17,7 +17,7 @@ const Body = () => {
   // };
   const getData = async () => {
     try {
-      let response = await fetch(MAIN_API);
+      let response = await fetch(MAIN_API,{made:'no-cors'});
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
