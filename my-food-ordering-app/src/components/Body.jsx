@@ -17,13 +17,15 @@ const Body = () => {
   // };
   const getData = async () => {
     try {
-      let response = await fetch(MAIN_API,{made:'no-cors'});
+      let response = await fetch(MAIN_API,);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
   
       let data = await response.json();
-      const restaurants = data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+      let jsonData = JSON.parse(data.contents);
+      const restaurants = jsonData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
   
       if (restaurants) {
         setData(restaurants);
